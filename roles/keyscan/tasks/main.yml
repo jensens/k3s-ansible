@@ -1,0 +1,15 @@
+---
+
+- name: Scan for SSH host keys.
+  local_action:
+    module: shell
+    cmd: ssh-keyscan {{ inventory_hostname }} 2>/dev/null
+  changed_when: False
+  register: ssh_scan
+
+- name: Update known_hosts.
+  local_action:
+    module: known_hosts
+    key: "{{ item }}"
+    name: "{{ item.split(' ') | first }}"
+  with_items: "{{ ssh_scan.stdout_lines }}"

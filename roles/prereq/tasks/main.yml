@@ -1,4 +1,9 @@
 ---
+- name: Install Apparmour
+  package:
+    name: apparmor
+    state: present
+
 - name: Set SELinux to disabled state
   selinux:
     state: disabled
@@ -52,3 +57,4 @@
     path: /etc/sudoers
     validate: 'visudo -cf %s'
   when: ansible_distribution in ['CentOS', 'Red Hat Enterprise Linux']
+

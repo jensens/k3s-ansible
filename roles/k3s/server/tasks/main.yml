@@ -1,13 +1,32 @@
 ---
 
-- name: Copy K3s service file
+- name: Copy K3s service file (initial server node)
   register: k3s_service
   template:
-    src: "k3s.service.j2"
+    src: "k3s.service.initial.j2"
     dest: "{{ systemd_dir }}/k3s.service"
     owner: root
     group: root
     mode: 0644
+  when: groups[server_group].index(inventory_hostname) == 0
+
+- name: Copy K3s service file (additional server nodes)
+  register: k3s_service
+  template:
+    src: "k3s.service.additional.j2"
+    dest: "{{ systemd_dir }}/k3s.service"
+    owner: root
+    group: root
+    mode: 0644
+  when: groups[server_group].index(inventory_hostname) > 0
+
+- name: Enable and check K3s service (initial server node)
+  systemd:
+    name: k3s
+    daemon_reload: yes
+    state: restarted
+    enabled: yes
+  when: groups[server_group].index(inventory_hostname) == 0
 
 - name: Enable and check K3s service
   systemd:
@@ -15,34 +34,7 @@
     daemon_reload: yes
     state: restarted
     enabled: yes
-
-- name: Wait for node-token
-  wait_for:
-    path: "{{ k3s_server_location }}/server/node-token"
-
-- name: Register node-token file access mode
-  stat:
-    path: "{{ k3s_server_location }}/server/node-token"
-  register: p
-
-- name: Change file access node-token
-  file:
-    path: "{{ k3s_server_location }}/server/node-token"
-    mode: "g+rx,o+rx"
-
-- name: Read node-token from master
-  slurp:
-    path: "{{ k3s_server_location }}/server/node-token"
-  register: node_token
-
-- name: Store Master node-token
-  set_fact:
-    token: "{{ node_token.content | b64decode | regex_replace('\n', '') }}"
-
-- name: Restore node-token file access
-  file:
-    path: "{{ k3s_server_location }}/server/node-token"
-    mode: "{{ p.stat.mode }}"
+  when: groups[server_group].index(inventory_hostname) > 0
 
 - name: Create directory .kube
   file:

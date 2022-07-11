@@ -1,0 +1,1 @@
+# Provision Hetzner VMs and prepare for Ansible

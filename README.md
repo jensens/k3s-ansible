@@ -1,6 +1,8 @@
-# Build a Kubernetes cluster using k3s via Ansible
+# Build a Kubernetes cluster using k3s via Ansible on Hetzner Cloud
 
-Author: <https://github.com/itwars>
+Original Author: <https://github.com/itwars>
+
+Modification with hetzner-cloud/terraform and using etcd by <https://github.com/jensens>
 
 ## K3s Ansible Playbook
 
@@ -8,53 +10,45 @@ Build a Kubernetes cluster using Ansible with k3s. The goal is easily install a 
 
 - [X] Debian
 - [X] Ubuntu
-- [X] CentOS
+- [ ] CentOS
 
 on processor architecture:
 
 - [X] x64
-- [X] arm64
-- [X] armhf
+- [ ] arm64
+- [ ] armhf
+
+(unchecked options untested)
 
 ## System requirements
 
 Deployment environment must have Ansible 2.4.0+
-Master and nodes must have passwordless SSH access
+Server-nodes and agent-nodes must have passwordless SSH access (Terraform enables this)
 
 ## Usage
 
-First create a new directory based on the `sample` directory within the `inventory` directory:
+- On [Hetzner Cloud](https://www.hetzner.com/cloud) create a empty cloud config with a read-write token.
+- Install [Terraform](https://www.terraform.io/)
+- Create a ssh keypair `~/.ssh/tf_hetzner[.pub]`
+- In directory `terrform-hcloud`
+  - execute `terraform plan` to see what will happen and `terraform apply` to get the cluster up (enter Hetzner token if prompted).
+  - execute `./bin/gen-all.sh` to generate inventory and configuration.
+- In root directory run `ansible site.cfg`
 
-```bash
-cp -R inventory/sample inventory/my-cluster
-```
+## Get IP-Address
 
-Second, edit `inventory/my-cluster/hosts.ini` to match the system information gathered above. For example:
-
-```bash
-[master]
-192.16.35.12
-
-[node]
-192.16.35.[10:11]
-
-[k3s_cluster:children]
-master
-node
-```
-
-If needed, you can also edit `inventory/my-cluster/group_vars/all.yml` to match your environment.
-
-Start provisioning of the cluster using the following command:
-
-```bash
-ansible-playbook site.yml -i inventory/my-cluster/hosts.ini
-```
+- run `grep -A 1 "\[server\]" inventory/hcloud/hosts.ini` to get the ip address of the initial server node. Further used here as `IPADDRESS`.
+- run `ssh ansible@IPADDRESS` to connect to the server (usually not needed).
+- open `inventory/hcloud/hosts.ini` to lookup all other IPs.
 
 ## Kubeconfig
 
 To get access to your **Kubernetes** cluster just
 
 ```bash
-scp debian@master_ip:~/.kube/config ~/.kube/config
+scp ansible@IPADDRESS:~/.kube/config ~/.kube/config
 ```
+
+## Uninstall
+
+In `terraform-hcloud` directory run `terraform destroy`.

@@ -1,19 +1,23 @@
 ---
+- hosts: all
+  gather_facts: false
+  roles:
+    - role: keyscan
 
-- hosts: k3s_cluster
-  gather_facts: yes
-  become: yes
+- hosts: all
+  gather_facts: true
+  become: true
   roles:
     - role: prereq
     - role: download
     - role: raspberrypi
 
-- hosts: master
-  become: yes
+- hosts: server
+  become: true
   roles:
-    - role: k3s/master
+    - role: k3s/server
 
-- hosts: node
-  become: yes
+- hosts: agent
+  become: true
   roles:
-    - role: k3s/node
+    - role: k3s/agent
