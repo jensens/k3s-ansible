@@ -6,19 +6,9 @@ Modification with hetzner-cloud/terraform and using etcd by <https://github.com/
 
 ## K3s Ansible Playbook
 
-Build a Kubernetes cluster using Ansible with k3s. The goal is easily install a Kubernetes cluster on machines running:
+Build a Kubernetes cluster using Ansible with k3s. The goal is easily install a Kubernetes cluster on machines.
+Terraform used prior to rpvision the hcloud maschines.
 
-- [X] Debian
-- [X] Ubuntu
-- [ ] CentOS
-
-on processor architecture:
-
-- [X] x64
-- [ ] arm64
-- [ ] armhf
-
-(unchecked options untested)
 
 ## System requirements
 
@@ -31,9 +21,13 @@ Server-nodes and agent-nodes must have passwordless SSH access (Terraform enable
 - Install [Terraform](https://www.terraform.io/)
 - Create a ssh keypair `~/.ssh/tf_hetzner[.pub]`
 - In directory `terrform-hcloud`
+  - execute `terraform init`.
   - execute `terraform plan` to see what will happen and `terraform apply` to get the cluster up (enter Hetzner token if prompted).
   - execute `./bin/gen-all.sh` to generate inventory and configuration.
-- In root directory run `ansible site.cfg`
+
+- In projects root directory
+  - run `ansible-galaxy collection install kubernetes.core`
+  - run `ansible site.cfg`
 
 ## Get IP-Address
 

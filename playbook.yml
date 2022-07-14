@@ -1,0 +1,41 @@
+---
+# - hosts: all
+#   gather_facts: false
+#   roles:
+#     - role: keyscan
+
+# - hosts: router
+#   gather_facts: true
+#   become: true
+#   roles:
+#     - role: nat
+
+# - hosts: ipv6only
+#   gather_facts: true
+#   become: true
+#   roles:
+#     - role: defaultgateway
+
+# - hosts: all
+#   gather_facts: true
+#   become: true
+#   roles:
+#     - role: prereq
+#     - role: download
+
+# - hosts: server
+#   become: true
+#   roles:
+#     - role: k3s/server
+
+# - hosts: agent
+#   gather_facts: true
+#   become: true
+#   roles:
+#     - role: k3s/agent
+
+- hosts: server
+  gather_facts: true
+  become: true
+  roles:
+    - role: longhorn

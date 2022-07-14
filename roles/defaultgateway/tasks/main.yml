@@ -1,0 +1,13 @@
+---
+
+- name: Persistent enable default gateway
+  blockinfile:
+    path: "/etc/network/interfaces"
+    block: |
+      auto ens10
+      iface ens10 inet dhcp
+        post-up ip route add default via 10.0.10.1 dev ens10
+
+- name: Reload ens10 config
+  become: true
+  shell: "systemctl restart networking"

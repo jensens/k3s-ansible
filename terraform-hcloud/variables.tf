@@ -8,7 +8,7 @@ variable "location" {
 }
 
 variable "instances_server" {
-  default = "3"
+  default = "2"
 }
 variable "instances_agent" {
   default = "2"
@@ -24,4 +24,7 @@ variable "os_type" {
 
 variable "ip_range" {
   default = "10.0.10.0/24"
+}
+variable "ip_base" {
+  default = "10.0.10."
 }

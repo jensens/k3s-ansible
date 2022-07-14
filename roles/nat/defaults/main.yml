@@ -1,0 +1,6 @@
+---
+
+wan_interface: eth0
+lan_interface: ens10
+
+lan_ip_range: 10.0.10.0/24

@@ -40,7 +40,7 @@
   file:
     path: ~{{ ansible_user }}/.kube
     state: directory
-    owner: "{{ ansible_user }}"
+    owner: "{{ ansible_user }}.{{ ansible_user }}"
     mode: "u=rwx,g=rx,o="
 
 - name: Copy config file to user home directory
@@ -48,8 +48,8 @@
     src: /etc/rancher/k3s/k3s.yaml
     dest: ~{{ ansible_user }}/.kube/config
     remote_src: yes
-    owner: "{{ ansible_user }}"
-    mode: "u=rw,g=,o="
+    owner: "{{ ansible_user }}.{{ ansible_user }}"
+    mode: "u=rw,g=rw,o="
 
 - name: Replace https://localhost:6443 by https://master-ip:6443
   command: >-

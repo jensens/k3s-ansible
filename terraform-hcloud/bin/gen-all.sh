@@ -7,7 +7,7 @@ mkdir -p $INVENTORY_DIR/group_vars
 
 # generate hosts file
 echo "generate hosts file"
-$SCRIPT_DIR/terraform-inventory -inventory $SCRIPT_DIR/.. | sed '/\[/ s/-/_/g'>$INVENTORY_DIR/hosts.ini
+$SCRIPT_DIR/gen-hosts.py >$INVENTORY_DIR/hosts.ini
 
 # copy group_vars
 if [ ! -f $INVENTORY_DIR/group_vars/all.yml ]

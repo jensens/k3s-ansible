@@ -1,5 +1,10 @@
 ---
 
+- name: debug 0
+  debug:
+    var: hostvars[groups[server_group][0]]
+    #["ansible_ens10"]["ipv4"]["address"]
+
 - name: Copy K3s service file
   template:
     src: "k3s.service.j2"
