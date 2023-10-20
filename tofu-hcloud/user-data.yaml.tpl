@@ -1,6 +1,6 @@
 #cloud-config
 users:
-  - name: "ansible"
+  - name: "${sudo_user}"
     groups: ["sudo"]
     sudo: "ALL=(ALL) NOPASSWD:ALL"
     shell: "/bin/bash"

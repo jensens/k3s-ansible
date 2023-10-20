@@ -1,6 +1,6 @@
 #/bin/bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-INVENTORY_DIR=$SCRIPT_DIR/../../inventory/hcloud
+INVENTORY_DIR=$SCRIPT_DIR/../../ansible/inventory/hcloud
 
 # create inventory folder
 mkdir -p $INVENTORY_DIR/group_vars
