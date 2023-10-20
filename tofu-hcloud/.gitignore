@@ -1,2 +1,2 @@
-tofu/.terraform*
-tofu/terraform.tfstate*
+.terraform*
+terraform.tfstate*

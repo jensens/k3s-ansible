@@ -31,7 +31,7 @@ variable "server_type_server" {
 variable "instances_agent" {
   default = "1"
 }
-variable "prefix_server" {
+variable "prefix_agent" {
   default = "red"
 }
 variable "server_type_agent" {
