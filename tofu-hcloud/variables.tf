@@ -3,7 +3,7 @@ variable "hcloud_token" {
   # default = <your-api-token>
 }
 variable "sudo_user" {
-  default = "kup"
+  default = "deployer"
 }
 variable "authorized_key" {
   default = "~/.ssh/id_ed25519.pub"
@@ -19,7 +19,7 @@ variable "os_type" {
 
 # instances
 variable "instances_server" {
-  default = "1"
+  default = "2"
 }
 variable "prefix_server" {
   default = "blue"
@@ -29,7 +29,7 @@ variable "server_type_server" {
 }
 
 variable "instances_agent" {
-  default = "1"
+  default = "2"
 }
 variable "prefix_agent" {
   default = "red"
@@ -39,10 +39,14 @@ variable "server_type_agent" {
 }
 
 # networking
+variable "floating_ips" {
+  # must be equal or less to instances_server
+  default = 1
+}
 variable "private_cidr" {
   default = "10.1.0.0/16"
 }
-variable "privet_ip_base_server" {
+variable "privat_ip_base_server" {
   default = "10.1.1."
 }
 variable "private_ip_base_agent" {

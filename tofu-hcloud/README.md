@@ -3,6 +3,7 @@
 ## Prepare
 
 - [Install OpenTofu](https://opentofu.org/docs/intro/install) on your local machine or a server used ofr provisioning and management task only.
+- Install Python 3
 - If not already there, create an ssh key-pair using `ssh-keygen`, preferably an `ed25519` key (but thats upon you).
 - You need an Hetzner Cloud account. If you don't have one, [sign up](https://accounts.hetzner.com/).
 - Create a project in the Hetzner Cloud Console and generate an API token - save this token!
@@ -23,7 +24,7 @@ Check the output, is this what you want to apply?
 
 ## Apply/ Deploy
 
-Attention: Hetzner charges you for the servers abd services you create!
+*Attention*: **Hetzner charges you** for the servers and services you create!
 
 Run `tofu apply` and enter your Hetzner token when prompted (or pass the variable as mentioned above).
 
@@ -48,3 +49,6 @@ Since they create costs as well, this is recommended if you do not need them any
 To go on with Ansible and install K3S with the specific setup for HCloud, you need to prepare the Ansible inventory.
 It is generated from the Terraform state file.
 
+Run `./bin/gen-all-sh`.
+
+This creates
