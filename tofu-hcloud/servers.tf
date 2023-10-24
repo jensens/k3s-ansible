@@ -24,7 +24,8 @@ resource "hcloud_server" "server" {
     {
       ssh_pubkey = file(var.authorized_key),
       sudo_user  = var.sudo_user,
-      floating_ip = count.index < var.floating_ips ? hcloud_floating_ip.four[count.index].ip_address : "",
+      floating_ipv4 = count.index < var.floating_ips ? hcloud_floating_ip.four[count.index].ip_address : "",
+      floating_ipv6 = count.index < var.floating_ips ? hcloud_floating_ip.six[count.index].ip_address : "",
     }
   )
 }
@@ -50,7 +51,8 @@ resource "hcloud_server" "agent" {
     {
       ssh_pubkey = file(var.authorized_key),
       sudo_user  = var.sudo_user,
-      floating_ip = "",
+      floating_ipv4 = "",
+      floating_ipv6 = "",
     }
   )
 }
