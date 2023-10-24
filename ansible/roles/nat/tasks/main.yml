@@ -27,7 +27,7 @@
     jump: ACCEPT
   notify: persist iptables
 
-- name: Flush nat rules
+- name: Flush NAT rules
   iptables:
     table: nat
     chain: POSTROUTING

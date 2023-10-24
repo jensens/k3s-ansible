@@ -10,7 +10,7 @@ variable "authorized_key" {
 }
 
 variable "locations" {
-  default = ["nbg1", "fsn1", "hel1"]
+  default = ["fsn1", "hel1", "nbg1"]
 }
 
 variable "os_type" {
@@ -19,7 +19,7 @@ variable "os_type" {
 
 # instances
 variable "instances_server" {
-  default = "2"
+  default = "3"
 }
 variable "prefix_server" {
   default = "blue"
@@ -41,7 +41,7 @@ variable "server_type_agent" {
 # networking
 variable "floating_ips" {
   # must be equal or less to instances_server
-  default = 1
+  default = 2
 }
 variable "private_cidr" {
   default = "10.1.0.0/16"
